@@ -1,0 +1,1658 @@
+/*
+ * Perpustakaan SMP IT — UI kit
+ * Design tokens + component classes used by resources/views/components/ui/*.blade.php.
+ * Import once in resources/css/app.css:  @import './perpustakaan.css';
+ *
+ * Classes ending in .is-hover / .is-focus / .is-active only exist so the
+ * documentation can show a state without the pointer. They are safe to ship.
+ */
+
+/* ========================================================================
+   1. Tokens
+   ======================================================================== */
+:root {
+  /* Color (names follow the Figma design system) */
+  --color-black: #111111;
+  --color-brand: #2f318b;
+  --color-white: #ffffff;
+  --color-gray-soft: #f8f8f8;
+  --color-brand-soft: #babbe8;
+  --color-brand-soft2: #e1e1f5;
+  --color-gray: #8a8a8a;
+  --color-gray-line: #eeeeee;
+  --color-red: #de0000;
+  --color-green: #1f7a3a;
+  --color-green-soft: #e2f3e6;
+  --color-red-soft: #fce4e2;
+
+  /* Chart marks (validated for colour-blind readers; red and green never touch) */
+  --chart-series: #4b4ebf;
+  --chart-good: #2e9150;
+  --chart-critical: #de0000;
+  --chart-track: var(--color-brand-soft2);
+  --chart-track-good: var(--color-green-soft);
+  --chart-grid: #eeeeee;
+  --chart-baseline: #d6d6d6;
+
+  /* Typography: Inter, letter-spacing -2% */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --tracking: -0.02em;
+
+  /* Radius */
+  --radius-pill: 999px;
+  --radius-card: 24px;
+  --radius-input: 16px;
+
+  /* Layout */
+  --container-max: 1280px;
+  --page-gutter: 80px;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --page-gutter: 16px;
+  }
+}
+
+/* ========================================================================
+   2. Base
+   ======================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* -2% resolved against each element's own size (an inherited em would freeze at 12px) */
+  letter-spacing: var(--tracking);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-gray-soft);
+  color: var(--color-black);
+  font-family: var(--font-family);
+  font-size: 12px;
+  line-height: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+img {
+  display: block;
+}
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+[x-cloak] {
+  display: none !important;
+}
+
+/* Typography utilities (named after the Figma text styles) */
+.t-30-semibold { font-size: 30px; font-weight: 600; line-height: normal; }
+.t-28-semibold { font-size: 28px; font-weight: 600; line-height: normal; }
+.t-16-semibold { font-size: 16px; font-weight: 600; line-height: 1.15; }
+.t-16-medium   { font-size: 16px; font-weight: 500; line-height: 1.15; }
+.t-13-semibold { font-size: 13px; font-weight: 600; line-height: normal; }
+.t-12-medium   { font-size: 12px; font-weight: 500; line-height: 18px; }
+.t-12-regular  { font-size: 12px; font-weight: 400; line-height: 18px; }
+.t-10-regular  { font-size: 10px; font-weight: 400; line-height: normal; }
+.text-gray  { color: var(--color-gray); }
+.text-brand { color: var(--color-brand); }
+.text-red   { color: var(--color-red); }
+
+/* ========================================================================
+   3. Layout
+   ======================================================================== */
+.ui-main-margin {
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--page-gutter);
+}
+.ui-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: var(--container-max);
+  padding: 24px;
+}
+/* Di layar kecil jarak tepi sudah ditangani .ui-main-margin */
+@media (max-width: 640px) {
+  .ui-main {
+    padding: 24px 0;
+  }
+}
+.ui-section {
+  padding-top: 24px;
+}
+
+/* ---------- Header ---------- */
+.ui-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--page-gutter);
+  background: var(--color-white);
+  backdrop-filter: blur(8px);
+}
+.ui-header__container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: var(--container-max);
+  padding: 16px 24px;
+}
+.ui-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.ui-header__logo {
+  position: relative;
+  width: 33px;
+  height: 32px;
+  overflow: hidden;
+}
+.ui-header__logo img {
+  position: absolute;
+  top: 0;
+  left: -19.82%;
+  width: 149.55%;
+  height: 112.96%;
+  max-width: none;
+}
+.ui-header__name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22.5px;
+  white-space: nowrap;
+}
+.ui-header__right {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  min-width: 0;
+}
+/* Tujuh menu Superadmin bisa melebihi lebar header: digulir, bukan menimpa logo. */
+.ui-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ui-header__nav::-webkit-scrollbar {
+  display: none;
+}
+.ui-header__link {
+  padding: 8px 4px;
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+.ui-header__link:hover {
+  color: var(--color-black);
+}
+.ui-header__link--active {
+  color: var(--color-black);
+  font-weight: 500;
+}
+.ui-header__account {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  padding-left: 16px;
+  border-left: 1px solid var(--color-gray-line);
+}
+.ui-header__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 112.93px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .ui-header__container {
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+  .ui-header__right {
+    flex-basis: 100%;
+    justify-content: space-between;
+  }
+  .ui-header__nav {
+    flex: 1 1 auto;
+  }
+}
+
+/* ---------- Page header & back link ---------- */
+.ui-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ui-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ui-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+}
+.ui-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-gray);
+}
+.ui-back-link:hover {
+  color: var(--color-black);
+}
+
+/* ========================================================================
+   4. Buttons
+   ======================================================================== */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
+  transition: filter 0.15s ease, background-color 0.15s ease;
+}
+.ui-btn--primary {
+  background: var(--color-brand);
+  color: var(--color-white);
+}
+.ui-btn--secondary {
+  border-color: var(--color-gray-line);
+  background: var(--color-white);
+  color: var(--color-black);
+}
+.ui-btn--danger {
+  background: var(--color-red);
+  color: var(--color-white);
+}
+.ui-btn--primary:hover:not(:disabled),
+.ui-btn--danger:hover:not(:disabled),
+.ui-btn--primary.is-hover,
+.ui-btn--danger.is-hover {
+  filter: brightness(1.12);
+}
+.ui-btn--secondary:hover:not(:disabled),
+.ui-btn--secondary.is-hover {
+  background: var(--color-gray-soft);
+}
+.ui-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+/* Disabled primary turns Brand-Soft instead of fading (Figma) */
+.ui-btn--primary:disabled {
+  background: var(--color-brand-soft);
+  opacity: 1;
+}
+.ui-btn--block {
+  flex: 1 0 0;
+  min-width: 0;
+}
+/* Icon-only button in the secondary frame (e.g. logout) */
+.ui-btn--icon {
+  width: 38px;
+  padding: 0;
+}
+
+/* Row action icons (edit / delete) */
+.ui-icon-btn {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+.ui-icon-btn:hover,
+.ui-icon-btn.is-hover {
+  opacity: 0.7;
+}
+.ui-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.ui-link-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.ui-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* ========================================================================
+   5. Form fields
+   ======================================================================== */
+.ui-field {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+}
+.ui-field__label {
+  color: var(--color-gray);
+}
+.ui-field__hint {
+  color: var(--color-gray);
+}
+.ui-field__error {
+  color: var(--color-red);
+}
+.ui-field-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+@media (max-width: 640px) {
+  .ui-field-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.ui-control {
+  width: 100%;
+  height: 40px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-gray-line);
+  border-radius: var(--radius-input);
+  background: var(--color-white);
+  color: var(--color-black);
+  font-size: 12px;
+  line-height: 18px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.ui-control::placeholder {
+  color: var(--color-gray);
+}
+.ui-control:hover,
+.ui-control.is-hover {
+  border-color: var(--color-brand-soft);
+}
+.ui-control:focus,
+.ui-control.is-focus {
+  border-color: var(--color-brand);
+}
+.ui-control:disabled {
+  background: var(--color-gray-soft);
+  color: var(--color-gray);
+  cursor: not-allowed;
+}
+.ui-control--invalid,
+.ui-control--invalid:hover {
+  border-color: var(--color-red);
+}
+.ui-control--textarea {
+  height: 72px;
+  min-height: 72px;
+  resize: vertical;
+}
+.ui-control--static {
+  display: flex;
+  align-items: center;
+  background: var(--color-gray-soft);
+}
+
+/* Inputs with a trailing caret (date, combobox) */
+.ui-control-wrap {
+  position: relative;
+  width: 100%;
+}
+.ui-control__caret {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.ui-control__caret--open {
+  transform: translateY(-50%) rotate(180deg);
+}
+.ui-control--date,
+.ui-control--combobox {
+  padding-right: 42px;
+}
+.ui-control--date {
+  position: relative;
+  cursor: pointer;
+}
+/* Stretch the native calendar trigger invisibly over the whole input */
+.ui-control--date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  opacity: 0;
+  cursor: pointer;
+}
+.ui-control--combobox {
+  text-overflow: ellipsis;
+}
+
+/* Combobox dropdown */
+.ui-combobox__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  z-index: 20;
+  max-height: 240px;
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--color-gray-line);
+  border-radius: var(--radius-input);
+  background: var(--color-white);
+  box-shadow: 0 8px 24px rgb(17 17 17 / 0.08);
+}
+.ui-combobox__list--static {
+  position: static;
+  margin-top: 4px;
+}
+.ui-combobox__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.ui-combobox__option--active {
+  background: var(--color-gray-soft);
+}
+.ui-combobox__option--selected {
+  background: var(--color-brand-soft2);
+  color: var(--color-brand);
+  font-weight: 500;
+}
+.ui-combobox__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-combobox__meta {
+  flex-shrink: 0;
+  color: var(--color-gray);
+  font-weight: 400;
+}
+.ui-combobox__empty {
+  padding: 10px 12px;
+  color: var(--color-gray);
+}
+
+/* Search (pill, borderless) */
+.ui-search {
+  width: 203.5px;
+  height: 36px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  font-size: 12px;
+  line-height: 18px;
+}
+.ui-search::placeholder {
+  color: var(--color-gray);
+}
+@media (max-width: 640px) {
+  .ui-search {
+    width: 100%;
+  }
+  .ui-book--lg {
+    width: 100%;
+    max-width: 320px;
+    height: 360px;
+  }
+}
+
+/* ========================================================================
+   6. Badge & tabs
+   ======================================================================== */
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.ui-badge--green { background: var(--color-green-soft); color: var(--color-green); }
+.ui-badge--red   { background: var(--color-red-soft);   color: var(--color-red); }
+.ui-badge--brand { background: var(--color-brand-soft2); color: var(--color-brand); }
+.ui-badge--gray  { background: var(--color-gray-line);  color: var(--color-gray); }
+
+.ui-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  height: 38px;
+  padding: 2px;
+  overflow-x: auto;
+  border-radius: 100px;
+  background: var(--color-gray-line);
+  scrollbar-width: none;
+}
+.ui-tabs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+.ui-tabs__item:hover {
+  color: var(--color-black);
+}
+.ui-tabs__item--active {
+  background: var(--color-white);
+  color: var(--color-black);
+  font-weight: 500;
+}
+.ui-tabs__count {
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+/* ========================================================================
+   7. Table
+   ======================================================================== */
+.ui-table-card {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+.ui-table-scroll {
+  position: relative; /* agar .sr-only di header tabel tidak ikut melebarkan halaman */
+  overflow-x: auto;
+}
+.ui-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.ui-table th,
+.ui-table td {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-gray-line);
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.ui-table th {
+  height: 41px;
+  color: var(--color-gray);
+  font-weight: 400;
+}
+.ui-table td {
+  height: 51px;
+}
+.ui-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.ui-table__muted {
+  color: var(--color-gray);
+}
+.ui-table__wrap {
+  white-space: normal !important;
+}
+.ui-table__clickable {
+  cursor: pointer;
+}
+.ui-table__clickable:hover td {
+  background: var(--color-gray-soft);
+}
+.ui-table__empty {
+  height: 120px !important;
+  color: var(--color-gray);
+  text-align: center !important;
+}
+
+/* Pagination (footer of the table card, shown only when there are more than 15 rows) */
+.ui-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  border-top: 1px solid var(--color-gray-line);
+}
+.ui-pagination__range {
+  color: var(--color-gray);
+  font-size: 12px;
+  line-height: 18px;
+}
+.ui-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ui-pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  color: var(--color-black);
+  font-size: 12px;
+  font-weight: 500;
+}
+.ui-pagination__btn:hover {
+  background: var(--color-gray-soft);
+}
+.ui-pagination__btn--active,
+.ui-pagination__btn--active:hover {
+  background: var(--color-brand-soft2);
+  color: var(--color-brand);
+}
+.ui-pagination__btn[aria-disabled='true'] {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.ui-pagination__next {
+  transform: rotate(180deg);
+}
+.ui-pagination__gap {
+  min-width: 20px;
+  color: var(--color-gray);
+  text-align: center;
+}
+
+/* ========================================================================
+   8. Modal (popup)
+   ======================================================================== */
+.ui-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgb(17 17 17 / 0.5);
+}
+.ui-modal__panel,
+.ui-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ui-modal__panel {
+  width: 383.993px;
+  max-width: 100%;
+  margin: auto;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+.ui-modal__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.ui-modal__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 100px;
+  background: var(--color-brand-soft2);
+}
+.ui-modal__icon--red {
+  background: var(--color-red-soft);
+}
+.ui-modal__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+}
+.ui-modal__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ========================================================================
+   9. Book
+   ======================================================================== */
+.ui-book {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: space-between;
+  width: 160px;
+  height: 226px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--color-brand-soft);
+  word-break: break-word;
+}
+.ui-book__title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.ui-book__author {
+  font-size: 10px;
+  line-height: normal;
+}
+.ui-book--lg {
+  width: 320px;
+  height: 425px;
+  padding: 22.5px;
+  border-radius: 30px;
+}
+.ui-book--lg .ui-book__title {
+  font-size: 30px;
+}
+.ui-book--lg .ui-book__author {
+  font-size: 18.75px;
+}
+
+.ui-book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+@media (max-width: 1024px) { .ui-book-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 768px)  { .ui-book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px)  { .ui-book-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.ui-book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  transition: border-color 0.15s ease;
+}
+.ui-book-card:hover,
+.ui-book-card.is-hover {
+  border-color: var(--color-brand-soft);
+}
+.ui-book-card__meta {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--color-gray);
+}
+.ui-book-card__cover {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 24px 0 20px;
+}
+
+/* ========================================================================
+   10. Dashboard: card, stat tile, charts
+   ======================================================================== */
+.ui-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+.ui-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ui-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+.ui-tile__label,
+.ui-tile__sub {
+  color: var(--color-gray);
+}
+/* Proportional figures on standalone values */
+.ui-tile__value {
+  padding: 4px 0 2px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.ui-tile__delta {
+  font-weight: 500;
+}
+.ui-tile__delta--good { color: var(--color-green); }
+.ui-tile__delta--bad { color: var(--color-red); }
+.ui-tile__delta--neutral { color: var(--color-gray); }
+.ui-tile__versus {
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+/* Meter: a ratio against a limit; the track is a lighter step of the same hue */
+.ui-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ui-meter__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.ui-meter__label {
+  font-weight: 500;
+}
+.ui-meter__value {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.ui-meter__track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--chart-track);
+}
+.ui-meter__fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--chart-series);
+}
+.ui-meter--good .ui-meter__track { background: var(--chart-track-good); }
+.ui-meter--good .ui-meter__fill { background: var(--chart-good); }
+.ui-meter__detail {
+  color: var(--color-gray);
+}
+
+/* Bar list: ranking with the value at the bar's tip */
+.ui-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-bar-list__row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ui-bar-list__label {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+.ui-bar-list__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-bar-list__meta {
+  flex-shrink: 0;
+  color: var(--color-gray);
+}
+.ui-bar-list__track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ui-bar-list__fill {
+  flex-shrink: 0;
+  min-width: 2px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--chart-series);
+}
+.ui-bar-list__row:hover .ui-bar-list__fill {
+  opacity: 0.8;
+}
+.ui-bar-list__value {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column chart (pure HTML/CSS, no JS) */
+.ui-columns {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-template-rows: 200px 24px;
+}
+.ui-columns__axis {
+  position: relative;
+}
+.ui-columns__tick {
+  position: absolute;
+  right: 8px;
+  transform: translateY(50%);
+  color: var(--color-gray);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.ui-columns__plot {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--chart-baseline);
+}
+.ui-columns__grid {
+  position: absolute;
+  right: 0;
+  left: 0;
+  border-top: 1px solid var(--chart-grid);
+}
+.ui-columns__col {
+  position: relative;
+  display: flex;
+  flex: 1 0 0;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+}
+.ui-columns__bar {
+  position: relative;
+  width: min(24px, 60%);
+  height: var(--h); /* set per column: style="--h: 40%" */
+  min-height: 1px;
+  border-radius: 4px 4px 0 0;
+  background: var(--chart-series);
+}
+.ui-columns__col:hover .ui-columns__bar {
+  opacity: 0.8;
+}
+/* Tooltip from data-tooltip on hover/focus */
+.ui-columns__col[data-tooltip]:hover::after,
+.ui-columns__col[data-tooltip]:focus-visible::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(var(--h) + 8px);
+  left: 50%;
+  z-index: 5;
+  padding: 6px 10px;
+  transform: translateX(-50%);
+  border: 1px solid var(--color-gray-line);
+  border-radius: 12px;
+  background: var(--color-white);
+  box-shadow: 0 8px 24px rgb(17 17 17 / 0.08);
+  color: var(--color-black);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.ui-columns__label {
+  position: absolute;
+  bottom: calc(var(--h) + 4px);
+  font-size: 12px;
+  font-weight: 600;
+}
+.ui-columns__x {
+  display: flex;
+}
+.ui-columns__x span {
+  flex: 1 0 0;
+  padding-top: 6px;
+  color: var(--color-gray);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Donut */
+.ui-donut {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.ui-donut__slice {
+  transition: opacity 0.12s ease;
+}
+.ui-donut svg:hover .ui-donut__slice:not(:hover) {
+  opacity: 0.45;
+}
+.ui-donut__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.ui-donut__value {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.ui-donut__caption {
+  color: var(--color-gray);
+}
+
+.ui-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-legend__row {
+  display: grid;
+  grid-template-columns: 10px 1fr auto 40px;
+  align-items: center;
+  gap: 8px;
+}
+.ui-legend__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.ui-legend__value {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.ui-legend__pct {
+  color: var(--color-gray);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========================================================================
+   11. Date range picker
+   ======================================================================== */
+.ui-range {
+  position: relative;
+  display: inline-block;
+}
+.ui-range__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 14px 0 18px;
+  border: 1px solid var(--color-gray-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ui-range__trigger:hover {
+  background: var(--color-gray-soft);
+}
+.ui-range__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  padding: 8px;
+  border: 1px solid var(--color-gray-line);
+  border-radius: var(--radius-input);
+  background: var(--color-white);
+  box-shadow: 0 8px 24px rgb(17 17 17 / 0.08);
+}
+.ui-range__panel--static {
+  position: static;
+}
+.ui-range__presets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-range__preset {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+.ui-range__preset:hover {
+  background: var(--color-gray-soft);
+}
+.ui-range__preset--active {
+  color: var(--color-brand);
+  font-weight: 500;
+}
+.ui-range__custom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 16px 12px 8px;
+  border-top: 1px solid var(--color-gray-line);
+}
+
+@media (max-width: 640px) {
+  .ui-range__panel {
+    right: auto;
+    left: 0;
+    width: calc(100vw - 32px);
+  }
+  .ui-range__trigger {
+    max-width: 100%;
+  }
+}
+
+/* ========================================================================
+   12. Utilities
+   ======================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ========================================================================
+   13. Halaman
+   ======================================================================== */
+
+/* ---------- Pilih peran & login ---------- */
+.ui-auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 512px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 48px 16px;
+}
+.ui-auth--login {
+  gap: 24px;
+  max-width: 432px;
+}
+
+.ui-auth__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+/* Potongan logo sama dengan header, diperbesar 2× */
+.ui-auth__logo {
+  position: relative;
+  width: 66px;
+  height: 64px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.ui-auth__logo img {
+  position: absolute;
+  top: 0;
+  left: -19.82%;
+  width: 149.55%;
+  height: 112.96%;
+  max-width: none;
+}
+
+.ui-auth__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-soft2);
+}
+.ui-auth__icon--brand {
+  margin-bottom: 8px;
+}
+
+.ui-auth__roles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-auth__role {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  text-align: left;
+  transition: border-color 0.15s ease;
+}
+.ui-auth__role:hover,
+.ui-auth__role.is-hover {
+  border-color: var(--color-brand-soft);
+}
+
+.ui-auth__role-text {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ui-auth__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+
+/* ---------- Halaman form ---------- */
+.ui-form-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.ui-form-page__back {
+  display: flex;
+  align-items: center;
+  height: 42px;
+}
+.ui-form-page__card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+.ui-form-page__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.ui-form-page__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 28px;
+}
+/* Mengisi separuh <x-ui.field-row> yang kosong agar field pasangannya tidak melebar */
+.ui-form-page__spacer {
+  flex: 1 0 0;
+}
+@media (max-width: 640px) {
+  .ui-form-page__spacer {
+    display: none;
+  }
+}
+
+/* ---------- Halaman detail ---------- */
+.ui-detail__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ui-detail__content {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 32px;
+}
+.ui-detail__column {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+.ui-detail__info {
+  display: flex;
+  flex-direction: column;
+  width: 672px;
+  max-width: 100%;
+  margin: 0;
+}
+.ui-detail__row {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-gray-line);
+}
+.ui-detail__row:last-child {
+  border-bottom: 0;
+}
+.ui-detail__row dt {
+  flex-shrink: 0;
+  width: 162px;
+  color: var(--color-gray);
+}
+.ui-detail__row dd {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-weight: 500;
+}
+.ui-detail__inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+}
+.ui-detail__sub {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 672px;
+  max-width: 100%;
+  padding-top: 24px;
+}
+.ui-detail__sub-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* Ikon yang diekspor adalah ArrowLeft; desain memutarnya menghadap kanan */
+.ui-detail__arrow {
+  transform: rotate(180deg);
+}
+@media (max-width: 1024px) {
+  .ui-detail__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  .ui-detail__column {
+    width: 100%;
+  }
+}
+
+/* ---------- Aturan peminjaman ---------- */
+.ui-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ui-rules__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ui-rules__card {
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+.ui-rules__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-rules__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-gray-line);
+}
+.ui-rules__item:last-child {
+  border-bottom: 0;
+}
+.ui-rules__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-soft2);
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.ui-rules__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding-top: 3px;
+}
+.ui-rules__empty {
+  padding: 20px;
+  color: var(--color-gray);
+  text-align: center;
+}
+
+/* ---------- Dashboard ---------- */
+.ui-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.ui-dashboard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ui-dashboard__tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+/* Enam kolom: baris terbagi 4/2, 3/3, 3/3 */
+.ui-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.ui-dashboard__cell--2 { grid-column: span 2; }
+.ui-dashboard__cell--3 { grid-column: span 3; }
+.ui-dashboard__cell--4 { grid-column: span 4; }
+
+.ui-dashboard__denda {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ui-dashboard__figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.ui-dashboard__figures div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ui-dashboard__figures dt {
+  color: var(--color-gray);
+  font-size: 12px;
+  line-height: 18px;
+}
+.ui-dashboard__figures dd {
+  margin: 0;
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.ui-dashboard__empty {
+  padding: 24px 0;
+  color: var(--color-gray);
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .ui-dashboard__tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ui-dashboard__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ui-dashboard__cell--2,
+  .ui-dashboard__cell--3,
+  .ui-dashboard__cell--4 {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 560px) {
+  .ui-dashboard__tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Potongan kecil ---------- */
+/* Keadaan kosong untuk daftar yang bukan tabel (mis. grid buku) */
+.ui-empty-card {
+  padding: 48px 20px;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  color: var(--color-gray);
+  text-align: center;
+}
+.ui-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ui-table__link {
+  color: var(--color-black);
+}
+.ui-table__link:hover {
+  color: var(--color-brand);
+  text-decoration: underline;
+}
+/* Pemilih berkas CSV di popup impor */
+.ui-control--file {
+  height: auto;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.ui-control--file::file-selector-button {
+  margin-right: 12px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-gray-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-gray-soft);
+  color: var(--color-black);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ui-detail__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-weight: 500;
+}
+.ui-detail__link:hover,
+.ui-detail__link.is-hover {
+  color: var(--color-brand);
+}
+/* Pembungkus Alpine yang tidak boleh ikut mengubah tata letak induknya */
+.ui-passthrough {
+  display: contents;
+}
