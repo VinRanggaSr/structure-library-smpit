@@ -1,3 +1,5 @@
+@php use App\Models\Siswa; @endphp
+
 <x-app-layout :nav="config('menu.superadmin')" title="Data Siswa">
     <x-ui.page-header title="Data Siswa">
         <x-ui.search placeholder="Cari data siswa..." />
@@ -23,7 +25,7 @@
                     <td>{{ $s->nama_siswa }}</td>
                     <td>{{ $s->jenis_kelamin_siswa }}</td>
                     <td>
-                        <x-ui.badge :tone="$s->status_siswa === \App\Models\Siswa::STATUS_AKTIF ? 'green' : 'gray'">
+                        <x-ui.badge :tone="$s->status_siswa === Siswa::STATUS_AKTIF ? 'green' : 'gray'">
                             {{ $s->status_siswa }}
                         </x-ui.badge>
                     </td>

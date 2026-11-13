@@ -1,6 +1,8 @@
 @php
+    use App\Models\ItemBuku;
+
     $item = $buku->itemBuku;
-    $tersedia = $item->where('status_buku', \App\Models\ItemBuku::STATUS_TERSEDIA)->count();
+    $tersedia = $item->where('status_buku', ItemBuku::STATUS_TERSEDIA)->count();
 @endphp
 
 <x-app-layout :nav="config('menu.superadmin')" :title="$buku->judul_buku">
@@ -65,7 +67,7 @@
                         <tr>
                             <td>{{ $i->kode_buku }}</td>
                             <td>
-                                <x-ui.badge :tone="$i->status_buku === \App\Models\ItemBuku::STATUS_TERSEDIA ? 'green' : 'brand'">
+                                <x-ui.badge :tone="$i->status_buku === ItemBuku::STATUS_TERSEDIA ? 'green' : 'brand'">
                                     {{ $i->status_buku }}
                                 </x-ui.badge>
                             </td>
@@ -123,7 +125,7 @@
             permanen terhapus"
             :action="route('admin.buku.item.destroy', [$buku, $i])"
             :blocked-title="'Buku ' . $i->kode_buku . ' tidak dapat dihapus'"
-            :blocker="$i->status_buku === \App\Models\ItemBuku::STATUS_DIPINJAM
+            :blocker="$i->status_buku === ItemBuku::STATUS_DIPINJAM
                 ? 'Item buku sedang dipinjam. Tunggu hingga dikembalikan.'
                 : null" />
     @endforeach
